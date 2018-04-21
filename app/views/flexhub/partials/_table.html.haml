@@ -1,0 +1,52 @@
+:javascript
+  $(document).ready(function($) {
+    $("[data-href]").click(function() {
+        window.location = $(this).data("href");
+    });
+  });
+
+
+- if content.show_status
+  :css
+    tr.flexhub-success td:first-child   { border-left: 6px solid #5eba00AA; }
+    tr.flexhub-warning td:first-child   { border-left: 6px solid #f1c40fAA; }
+    tr.flexhub-danger td:first-child    { border-left: 6px solid #cd201fAA; }
+    tr.flexhub-secondary td:first-child { border-left: 6px solid #868e96AA; }
+    /* tr.flexhub-success   { background-color: #5eba001A !important; } */
+    tr.flexhub-warning   { background-color: #f1c40f1A !important; }
+    tr.flexhub-danger    { background-color: #cd201f1A !important; }
+    tr.flexhub-secondary { background-color: #868e961A !important; }
+    tr.flexhub-success:hover   { background-color: #5eba006A !important; cursor: pointer; }
+    tr.flexhub-warning:hover   { background-color: #f1c40f6A !important; cursor: pointer; }
+    tr.flexhub-danger:hover    { background-color: #cd201f6A !important; cursor: pointer; }
+    tr.flexhub-secondary:hover { background-color: #868e966A !important; cursor: pointer; }
+
+%div{ class: "row row-cards row-deck" }
+  .col-12
+    .card
+      - if content.title || content.actions
+        .card-header
+          %h3{ class: "card-title" }= content.title
+          %div{ class: "btn-list text-right", style: "margin-left: auto;" }
+            - if content.actions
+              - content.actions.each do |action|
+                %a{ href: action[:path], class: "btn btn-primary btn-sm" }= action[:text]
+
+      .table-responsive
+        %table{ class: "table table-hover table-outline table-vcenter text-nowrap card-table" }
+          %thead
+            %tr
+              - content.headers.each do |item|
+                %th= item
+
+          %tbody
+            - if content.content
+              - content.content.each do |chunk|
+                %tr{ class: "flexhub-#{chunk[:status]}", "data-href": chunk[:link] }
+                  - chunk[:item].each_with_index do |item, index|
+                    %td
+                      - if item.html_safe? 
+                        = item
+                      - else
+                        = item.try(&:html_safe)
+                  
