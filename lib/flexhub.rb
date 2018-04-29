@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: Mime::Type.register "application/xls", :xls
+
 module Flexhub
   autoload :Table,  'flexhub/table'  
   
