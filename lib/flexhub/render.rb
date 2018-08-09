@@ -4,13 +4,13 @@ module Flexhub
       render partial: "flexhub/partials/table", locals: { content: item }
     end
 
-    def flexhub_render_view(item)
+    def flexhub_respond(item)
       respond_to do |format|
-        format.html { render "flexhub/view", locals: { content: item } }
+        format.html { flexhub_render_view(item) } }
         format.xml { render xml: item }
         format.json { render json: item }
 
-        format.csv do 
+        format.csv do
           exporter = eval("#{item.class}::Exporter")
           if exporter && exporter.methods.include?(:to_csv)
             render plain: exporter.to_csv(item)
@@ -19,6 +19,10 @@ module Flexhub
           end
         end
       end
+    end
+
+    def flexhub_render_view(item)
+      render "flexhub/view", locals: { content: item }
     end
   end
 end

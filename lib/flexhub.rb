@@ -3,10 +3,9 @@
 # TODO: Mime::Type.register "application/xls", :xls
 
 module Flexhub
-  autoload :Table,  'flexhub/table'  
-  
-  autoload :Render, 'flexhub/render' 
-  
+  autoload :Table,  'flexhub/table'
+  autoload :Render, 'flexhub/render'
+
   # test config
   mattr_accessor :test_config_value
   @@test_config_value = nil
