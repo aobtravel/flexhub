@@ -6,7 +6,7 @@ module Flexhub
 
     def flexhub_respond(item)
       respond_to do |format|
-        format.html { flexhub_render_view(item) } }
+        format.html { flexhub_render_view(item) }
         format.xml { render xml: item }
         format.json { render json: item }
 
