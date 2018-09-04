@@ -2,9 +2,12 @@
 
 # TODO: Mime::Type.register "application/xls", :xls
 
+require "flexhub/array_extension"
+require "flexhub/filter"
+
 module Flexhub
-  autoload :Table,  'flexhub/table'
-  autoload :Render, 'flexhub/render'
+  autoload :Table,  "flexhub/table"
+  autoload :Render, "flexhub/render"
 
   # test config
   mattr_accessor :test_config_value
@@ -16,4 +19,5 @@ module Flexhub
   end
 end
 
-require 'flexhub/rails'
+require "flexhub/rails"
+require "flexhub/railtie" if defined?(Rails::Railtie)
