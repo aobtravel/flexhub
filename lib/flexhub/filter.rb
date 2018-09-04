@@ -7,7 +7,12 @@ module Flexhub
   end
 
   def filter_call(name, value, argument)
-    @filters[name].call(value, argument)
+    if @filters[name]
+      @filters[name].call(value, argument)
+    else
+      # TODO: Warning
+      value.to_s
+    end
   end
 
   def setup_filter

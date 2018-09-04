@@ -44,4 +44,4 @@
               - content.content.each do |chunk|
                 %tr{ class: "flexhub-#{chunk[:status]}", "data-href": chunk[:link] }
                   - chunk[:item].each_with_index do |item, index|
-                    %td= item.try(:html_safe)
+                    %td= item.to_s.try(:html_safe)
