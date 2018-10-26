@@ -1,26 +1,3 @@
-:javascript
-  $(document).ready(function($) {
-    $("[data-href]").click(function() {
-        window.location = $(this).data("href");
-    });
-  });
-
-
-- if content.show_status
-  :css
-    tr.flexhub-success td:first-child   { border-left: 6px solid #5eba00AA; }
-    tr.flexhub-warning td:first-child   { border-left: 6px solid #f1c40fAA; }
-    tr.flexhub-danger td:first-child    { border-left: 6px solid #cd201fAA; }
-    tr.flexhub-secondary td:first-child { border-left: 6px solid #868e96AA; }
-    /* tr.flexhub-success   { background-color: #5eba001A !important; } */
-    tr.flexhub-warning   { background-color: #f1c40f1A !important; }
-    tr.flexhub-danger    { background-color: #cd201f1A !important; }
-    tr.flexhub-secondary { background-color: #868e961A !important; }
-    tr.flexhub-success:hover   { background-color: #5eba006A !important; cursor: pointer; }
-    tr.flexhub-warning:hover   { background-color: #f1c40f6A !important; cursor: pointer; }
-    tr.flexhub-danger:hover    { background-color: #cd201f6A !important; cursor: pointer; }
-    tr.flexhub-secondary:hover { background-color: #868e966A !important; cursor: pointer; }
-
 %div{ class: "row row-cards row-deck" }
   .col-12
     .card
