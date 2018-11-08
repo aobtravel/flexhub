@@ -18,7 +18,13 @@
 
           %tbody
             - if content.content
-              - content.content.each do |chunk|
+              - render_collection = content.content
+              - render_collection = render_collection.take(content.records_per_page) if content.records_per_page
+              - render_collection.each do |chunk|
                 %tr{ class: "flexhub-#{chunk[:status]}", "data-href": chunk[:link] }
                   - chunk[:item].each_with_index do |item, index|
                     %td= item.to_s.try(:html_safe)
+
+              - if content.records_per_page
+                %tr
+                  %td{ colspan: 10 }= "+ #{content.content.size - content.records_per_page} records"

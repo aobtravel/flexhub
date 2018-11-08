@@ -1,24 +1,26 @@
 module Flexhub
   class Table
     attr_reader :title, :actions, :headers, :content,
-                :show_status, :max_columns
+                :show_status, :max_columns,
+                :records_per_page
 
     def initialize(opts = {})
       @title = opts[:title]
       @actions = opts[:actions]
       @headers = opts[:headers]
       @max_columns = @headers.try(&:size)
+      @records_per_page = opts[:records_per_page]
       @show_status = opts[:show_status] || false
       @content = []
     end
 
     def push(item, opts = {})
-      @content << { 
-        status: opts[:status] || :success, 
+      @content << {
+        status: opts[:status] || :success,
         link: opts[:link],
         item: item
       }
-      @max_columns = item.size if @max_columns < item.size 
+      @max_columns = item.size if @max_columns < item.size
     end
 
     def add_action(item)
