@@ -26,5 +26,7 @@
                     %td= item.to_s.try(:html_safe)
 
               - if content.records_per_page
-                %tr
-                  %td{ colspan: 10 }= "+ #{content.content.size - content.records_per_page} records"
+                - diff = content.content.size - content.records_per_page
+                - if diff > 0
+                  %tr
+                    %td{ colspan: 10 }= "+ #{content.content.size - content.records_per_page} records"
