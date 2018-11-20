@@ -1,10 +1,5 @@
 # Flexhub
-Experimental gem which makes it easy to manage datasets like tables.
-
-This is designed to be used with [Tabler](https://tabler.github.io/).
-
-## Usage
-How to use my plugin.
+Experimental gem which makes it easy to manage data sets like tables.
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -23,23 +18,40 @@ Or install it yourself as:
 $ gem install flexhub
 ```
 
+```ruby
+Flexhub.setup do |config|
+  config.default_table_options = {
+    paginate: true,
+    paginate_per_page: 25
+  }
+
+  # config.filter(:humanize, lambda { |value, argument| value.try(:humanize) })
+  config.initialize_default_filters
+end
+```
+
 ## Sample
 
 ```ruby
-include Flexhub::Render
-
-...
-
 def index
-  table = Flexhub::Table.new title: "Manage users",
-                             actions: [{ text: "New", action: "new" }],
-                             headers: [ "Login", "Name", "Mail" ]
+  options = {
+    page: params[:page],
+    table: {
+      paginate: true,
+      paginate_per_page: 25
+    }
+  }
 
-  Users.order('name').each do |user|
-    table.push [ user.login, user.name, user.mail ]
-  end
+  extractFields = [
+    { field: :id, filter: lambda { |item| "##{item}" } }, 
+    { field: :login, html: { style: "font-weight: bold;" } }, 
+    { field: :name, filter: :humanize }, 
+    { field: :mail }
+  ]
 
-  flexhub_render_view table
+  dataSet = Flexhub::DataSetActiveRecord.new(User.all)
+  table = Flexhub::Table.new(dataSet)
+  table.render(extractFields, options: options)
 end
 ```
 
