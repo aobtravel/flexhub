@@ -18,8 +18,8 @@ module Flexhub
       when "today"      then return TimeRange.new(Time.now.midnight)
       when "yesterday"  then return TimeRange.new(Time.now.midnight - 1.day)
       when "last_hour"  then return TimeRange.new(1.hour.ago)
-      when "this_week"  then return TimeRange.new(1.hour.ago)
-      when "last_week"  then return TimeRange.new(1.hour.ago)
+      when "this_week"  then return TimeRange.new(Time.now.beginning_of_week, Time.now.beginning_of_week + 7.days)
+      when "last_week"  then return TimeRange.new(Time.now.beginning_of_week - 7.days, Time.now.beginning_of_week)
       end
 
       return query_to_date(query[5..-1]) if query[0..3] == "last"
