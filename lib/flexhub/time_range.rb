@@ -1,16 +1,10 @@
 module Flexhub
   class TimeRange
-    def start_date
-      @start_date
-    end
-
-    def end_date
-      @end_date
-    end
+    attr_accessor :start_date, :end_date
 
     def initialize(start_date, end_date = nil)
-      @start_date = start_date
-      @end_date = end_date
+      self.start_date = start_date
+      self.end_date = end_date
     end
 
     def self.from_query(query)
@@ -38,6 +32,69 @@ module Flexhub
       when "M" then TimeRange.new(num.months.ago)
       when "y" then TimeRange.new(num.years.ago)
       end
+    end
+
+    def self.time_range_collection
+      [
+        ["Today", "today"],
+        ["Yesterday", "yesterday"],
+        ["Last 15 minutes", "last_15m"],
+        ["Last 30 minutes", "last_30m"],
+        ["Last 1 hour", "last_hour"],
+        ["Last 4 hour", "last_4h"],
+        ["Last 12 hour", "last_12h"],
+        ["Last 24 hours", "last_24h"],
+        ["Last 48 hours", "last_48h"],
+        ["Last 7 days", "last_week"]
+      ]
+    end
+
+    def self.time_range_collection_grouped
+      [
+        [
+          "1",
+          [
+            ["Today", "today"],
+            ["Yesterday", "yesterday"],
+            ["This week", "this_week"],
+            ["This month", "this_month"],
+            ["This year", "this_year"]
+          ]
+        ],
+        [
+          "2",
+          [
+            ["Last 15 minutes", "last_15m"],
+            ["Last 30 minutes", "last_30m"],
+            ["Last 1 hour", "last_1h"],
+            ["Last 4 hour", "last_4h"],
+            ["Last 12 hour", "last_12h"],
+            ["Last 24 hour", "last_24h"],
+            ["Last 7 days", "last_week"]
+          ]
+        ],
+        [
+          "3",
+          [
+            ["Last 30 days", "last_30d"],
+            ["Last 60 days", "last_60d"],
+            ["Last 90 days", "last_90d"],
+            ["Last 6 months", "last_6M"],
+            ["Last 1 year", "last_1y"],
+            ["Last 2 year", "last_2y"],
+            ["Last 5 year", "last_5y"]
+          ]
+        ],
+        [
+          "4",
+          [
+            ["Today so far", "to_date_today"],
+            ["Week to date", "to_date_week"],
+            ["Month to date", "to_date_month"],
+            ["Year to date", "to_date_year"],
+          ]
+        ]
+      ]
     end
   end
 end
