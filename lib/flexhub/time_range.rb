@@ -22,15 +22,30 @@ module Flexhub
     end
 
     # Example: 10h => 10.hours.ago
+    # Example: 10_hours => 10.hours.ago
     def self.query_to_date(query)
-      num = query.to_i
-      case query[-1..-1]
-      when "s" then TimeRange.new(num.seconds.ago)
-      when "m" then TimeRange.new(num.minutes.ago)
-      when "h" then TimeRange.new(num.hours.ago)
-      when "d" then TimeRange.new(num.days.ago)
-      when "M" then TimeRange.new(num.months.ago)
-      when "y" then TimeRange.new(num.years.ago)
+      if (query_split = query.split("_")).size >= 2
+        num = query_split.first.to_i
+        case query_split.last
+        when "second", "seconds" then TimeRange.new(num.seconds.ago)
+        when "minute", "minutes" then TimeRange.new(num.minutes.ago)
+        when "hour", "hours" then TimeRange.new(num.hours.ago)
+        when "day", "days" then TimeRange.new(num.days.ago)
+        when "month", "months" then TimeRange.new(num.months.ago)
+        when "year", "years" then TimeRange.new(num.years.ago)
+        else nil
+        end
+      else
+        num = query.to_i
+        case query[-1..-1]
+        when "s" then TimeRange.new(num.seconds.ago)
+        when "m" then TimeRange.new(num.minutes.ago)
+        when "h" then TimeRange.new(num.hours.ago)
+        when "d" then TimeRange.new(num.days.ago)
+        when "M" then TimeRange.new(num.months.ago)
+        when "y" then TimeRange.new(num.years.ago)
+        else nil
+        end
       end
     end
 

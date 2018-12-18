@@ -9,7 +9,6 @@ require "flexhub/time_range"
 module Flexhub
   autoload :Table,  "flexhub/table"
   autoload :Render, "flexhub/render"
-  autoload :TimeRange, "flexhub/time_range"
 
   # test config
   mattr_accessor :test_config_value
