@@ -16,7 +16,7 @@ module Flexhub
 
     def push(item, opts = {})
       @content << {
-        status: opts[:status] || :success,
+        status: opts[:status],
         link: opts[:link],
         item: item
       }
