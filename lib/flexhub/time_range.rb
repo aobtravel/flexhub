@@ -18,7 +18,7 @@ module Flexhub
     end
 
     class << self
-      def from_query(start_date_query, end_date_query)
+      def from_query(start_date_query, end_date_query = nil)
         TimeRange.new string_to_datetime(start_date_query),
                       string_to_datetime(end_date_query)
       end
