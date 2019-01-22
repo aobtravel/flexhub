@@ -26,6 +26,10 @@ module Flexhub
       def string_to_datetime(query)
         return nil if query.blank?
 
+        if /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{3})?Z$/.match?(query)
+          return query.to_time
+        end
+
         case query
         when "today"      then return Time.now.midnight
         when "yesterday"  then return Time.now.midnight - 1.day
