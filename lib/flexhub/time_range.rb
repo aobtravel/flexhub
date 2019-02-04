@@ -1,5 +1,8 @@
 module Flexhub
   class TimeRange
+    TIME1_REGEX = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}((.[0-9]{3})?Z|(\+[0-9]{2}:[0-9]{2})?)$/
+    TIME2_REGEX = /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \+[0-9]{4}$/
+
     attr_accessor :start_date, :end_date
 
     def initialize(start_date, end_date = nil)
@@ -26,9 +29,11 @@ module Flexhub
       def string_to_datetime(query)
         return nil if query.blank?
 
-        if /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{3})?Z$/.match?(query)
-          return query.to_time
-        end
+        # DateTime.now  =>  2019-02-04T10:31:26+01:00 
+        return query.to_time if TIME1_REGEX.match?(query)
+
+        # Time.now      =>  2019-02-04 10:30:52 +0100
+        return query.to_time if TIME2_REGEX.match?(query)
 
         case query
         when "today"      then return Time.now.midnight
