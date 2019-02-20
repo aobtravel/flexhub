@@ -22,8 +22,13 @@ module Flexhub
 
     class << self
       def from_query(start_date_query, end_date_query = nil)
-        TimeRange.new string_to_datetime(start_date_query),
-                      string_to_datetime(end_date_query)
+        start = string_to_datetime(start_date_query)
+
+        if start.is_a?(Array)
+          TimeRange.new start[0], start[1]
+        else
+          TimeRange.new start, string_to_datetime(end_date_query)
+        end
       end
 
       def string_to_datetime(query)
@@ -36,8 +41,8 @@ module Flexhub
         return query.to_time if TIME2_REGEX.match?(query)
 
         case query
-        when "today"      then return Time.now.midnight
-        when "yesterday"  then return Time.now.midnight - 1.day
+        when "today"      then return Time.now.midnight, Time.now.midnight + 1.day
+        when "yesterday"  then return Time.now.midnight - 1.day, Time.now.midnight
         when "last_hour"  then return 1.hour.ago
         when "this_week"  then return Time.now.beginning_of_week, Time.now.beginning_of_week + 7.days
         when "last_week"  then return Time.now.beginning_of_week - 7.days, Time.now.beginning_of_week
