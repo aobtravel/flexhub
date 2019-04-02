@@ -17,6 +17,7 @@ module Flexhub
     def push(item, opts = {})
       @content << {
         status: opts[:status],
+        html: opts[:html].is_a?(Hash) ? opts[:html] : {},
         link: opts[:link],
         item: item
       }
