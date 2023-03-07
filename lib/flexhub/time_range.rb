@@ -34,18 +34,20 @@ module Flexhub
       def string_to_datetime(query)
         return nil if query.blank?
 
-        # DateTime.now  =>  2019-02-04T10:31:26+01:00 
+        # DateTime.now  =>  2019-02-04T10:31:26+01:00
         return query.to_time if TIME1_REGEX.match?(query)
 
         # Time.now      =>  2019-02-04 10:30:52 +0100
         return query.to_time if TIME2_REGEX.match?(query)
 
         case query
-        when "today"      then return Time.now.midnight, Time.now.midnight + 1.day
-        when "yesterday"  then return Time.now.midnight - 1.day, Time.now.midnight
-        when "last_hour"  then return 1.hour.ago
-        when "this_week"  then return Time.now.beginning_of_week, Time.now.beginning_of_week + 7.days
-        when "last_week"  then return Time.now.beginning_of_week - 7.days, Time.now.beginning_of_week
+        when "today"        then return Time.now.midnight, Time.now.midnight + 1.day
+        when "yesterday"    then return Time.now.midnight - 1.day, Time.now.midnight
+        when "last_hour"    then return 1.hour.ago
+        when "this_week"    then return Time.now.beginning_of_week, Time.now.beginning_of_week + 7.days
+        when "last_week"    then return Time.now.beginning_of_week - 7.days, Time.now.beginning_of_week
+        when "last_14_days" then return Time.now.beginning_of_week - 14.days, Time.now.beginning_of_week
+        when "last_30_days" then return Time.now.beginning_of_week - 30.days, Time.now.beginning_of_week
         end
 
         return interval_string_to_duration(query[5..-1]) if query[0..3] == "last"
